@@ -12,5 +12,10 @@ pip install cssselect
 pip install beautifulsoup4
 ```
 
+### 取得するデータについて
+Yahoo!知恵袋のデータを取得する
+就活ジャンルの中から
+「タイトル」、「本文」、「タグ」あたりをスクレイピングします
+
 
 
