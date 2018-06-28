@@ -5,6 +5,12 @@
 python3が使える環境を用意
 
 ### モジュールの追加
+```
+pip install lxml
+pip install requests
+pip install cssselect
+pip install beautifulsoup4
+```
 
 
 
