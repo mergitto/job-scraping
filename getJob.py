@@ -6,7 +6,7 @@ def get_oauth():
     CS = config.CONSUMER_SECRET
     AT = config.ACCESS_TOKEN
     ATS = config.ACCESS_TOKEN_SECRET
-    oauth = OAuth1Session(CK, CS, AT, ATS) #認証処理
+    oauth = OAuth1Session(CK, CS, AT, ATS)
     return oauth
 
 def tweet_search(search_word, oauth):
