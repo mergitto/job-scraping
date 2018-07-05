@@ -15,7 +15,7 @@ def tweet_search(search_word, oauth):
         "q": search_word,
         "lang": "ja",
         "result_type": "recent",
-        "count": "1"
+        "count": "100"
         }
     responce = oauth.get(url, params = params)
     if responce.status_code != 200:
@@ -24,10 +24,18 @@ def tweet_search(search_word, oauth):
     tweets = json.loads(responce.text)
     return tweets
 
+def write_text(text):
+    f = open('job.txt', 'a')
+    f.write(text)
+    f.close
 
 oauth = get_oauth()
-search_word = "#就活"
+search_word = "#就活 #大学生"
 tweets = tweet_search(search_word, oauth)
-print(tweets)
+
+pluch_texts = {}
+for tweet in tweets['statuses']:
+    pluch_texts[tweet['id']] = tweet['text']
+    write_text(tweet['text'])
 
 
