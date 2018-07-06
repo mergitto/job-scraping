@@ -5,6 +5,7 @@ from requests_oauthlib import OAuth1Session
 from time import sleep
 import pandas as pd
 from pprint import pprint
+import re
 
 def get_oauth():
     CK = config.CONSUMER_KEY
@@ -57,6 +58,8 @@ for search_word in search_word_list:
         tweets = tweet_search(search_word, oauth, max_id)
 
         for tweet in tweets['statuses']:
+            if re.match('RT', tweet['text']):
+                continue
             append_list = prepare_tweet_list(tweet)
             df_current = create_dataframe(append_list, columns)
             df = df.append(df_current)
