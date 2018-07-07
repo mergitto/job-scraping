@@ -47,12 +47,12 @@ def create_dataframe(data_list, columns):
     )
     return df
 
-max_id = -1
-count = 0
 columns = ['id', 'tweet', 'created_at']
 df = pd.DataFrame(columns=columns)
 search_word_list = ["就活 内定", "就活 大学生", "内定 資格", "新卒 内定"]
 for search_word in search_word_list:
+    max_id = -1
+    count = 0
     while True:
         oauth = get_oauth()
         tweets = tweet_search(search_word, oauth, max_id)
@@ -64,12 +64,14 @@ for search_word in search_word_list:
             df_current = create_dataframe(append_list, columns)
             df = df.append(df_current)
 
-        if max_id == tweets['statuses'][-1]['id']: break
+        if max_id == tweets['statuses'][-1]['id']:
+            break
         max_id = tweets['statuses'][-1]['id']
         count += 1
         df.to_csv('./job.csv', mode='a')
-        print(search_word, 'の探索回数は', count, 'です')
-        if count >= 60: break
+        print(search_word, 'の探索回数は', count, '回目です')
+        if count >= 60:
+            break
         sleep(60)
 
 
