@@ -6,6 +6,7 @@ from time import sleep
 import pandas as pd
 from pprint import pprint
 import re
+import sys
 
 def get_oauth():
     CK = config.CONSUMER_KEY
@@ -47,6 +48,12 @@ def create_dataframe(data_list, columns):
     )
     return df
 
+def is_same_max_id(max_id, current_max_id):
+    return max_id == current_max_id
+
+def is_end_loop(count):
+    return count >= 60
+
 columns = ['id', 'tweet', 'created_at']
 df = pd.DataFrame(columns=columns)
 search_word_list = config.SEARCH_WORD_LIST
@@ -64,14 +71,12 @@ for search_word in search_word_list:
             df_current = create_dataframe(append_list, columns)
             df = df.append(df_current)
 
-        if max_id == tweets['statuses'][-1]['id']:
-            break
+        if is_same_max_id(max_id, tweets['statuses'][-1]['id']): break
         max_id = tweets['statuses'][-1]['id']
         count += 1
-        df.to_csv('./job.csv', mode='a')
+        df.to_csv(sys.argv[1], mode='a')
         print(search_word, 'の探索回数は', count, '回目です')
-        if count >= 60:
-            break
+        if is_end_loop(count): break
         sleep(60)
 
 
