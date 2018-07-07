@@ -49,7 +49,7 @@ def create_dataframe(data_list, columns):
 
 columns = ['id', 'tweet', 'created_at']
 df = pd.DataFrame(columns=columns)
-search_word_list = ["就活 内定", "就活 大学生", "内定 資格", "新卒 内定"]
+search_word_list = config.SEARCH_WORD_LIST
 for search_word in search_word_list:
     max_id = -1
     count = 0
