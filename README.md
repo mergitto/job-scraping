@@ -8,6 +8,7 @@ python3が使える環境を用意
 ```
 pip install requests
 pip install requests-oauthlib
+pip install mojimoji
 ```
 
 ### configの設定
@@ -26,7 +27,7 @@ python getJob.py 好きなファイル名.csv
 ```
 抽出したtweetのクレンジング処理
 ```
-python pluck.py ↑で指定したファイル名.csv
+python pluck.py ↑で指定したファイル名.csv クレンジング後のファイル名.csv
 ```
 
 
