@@ -54,6 +54,14 @@ def is_same_max_id(max_id, current_max_id):
 def is_end_loop(count):
     return count >= 60
 
+def is_id_error(max_id, current_max_id):
+    try:
+        return is_same_max_id(max_id, current_max_id)
+    except IndexError:
+        print('リストの添字に関するエラー')
+        return True
+
+
 columns = ['id', 'tweet', 'created_at']
 df = pd.DataFrame(columns=columns)
 search_word_list = config.SEARCH_WORD_LIST
@@ -71,7 +79,7 @@ for search_word in search_word_list:
             df_current = create_dataframe(append_list, columns)
             df = df.append(df_current)
 
-        if is_same_max_id(max_id, tweets['statuses'][-1]['id']): break
+        if is_id_error(max_id, tweets['statuses'][-1]['id']): break
         max_id = tweets['statuses'][-1]['id']
         count += 1
         df.to_csv(sys.argv[1], mode='a')
