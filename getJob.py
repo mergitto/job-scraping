@@ -65,7 +65,7 @@ def is_id_error(max_id, current_max_id):
 columns = ['id', 'tweet', 'created_at']
 df = pd.DataFrame(columns=columns)
 search_word_list = config.SEARCH_WORD_LIST
-for search_word in search_word_list:
+for index, search_word in enumerate(search_word_list):
     max_id = -1
     count = 0
     while True:
@@ -79,8 +79,8 @@ for search_word in search_word_list:
             df_current = create_dataframe(append_list, columns)
             df = df.append(df_current)
 
-        if is_id_error(max_id, tweets['statuses'][-1]['id']): break
         max_id = tweets['statuses'][-1]['id']
+        if is_id_error(max_id, tweets['statuses'][-1]['id']): break
         count += 1
         df.to_csv(sys.argv[1], mode='a')
         print(search_word, 'の探索回数は', count, '回目です')
