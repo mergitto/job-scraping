@@ -79,10 +79,7 @@ for index, search_word in enumerate(search_word_list):
             df_current = create_dataframe(append_list, columns)
             df = df.append(df_current)
 
-        try:
-            if is_id_error(max_id, tweets['statuses'][-1]['id']): break
-        except :
-            pass
+        if is_id_error(max_id, tweets['statuses'][-1]['id']): break
         max_id = tweets['statuses'][-1]['id']
         count += 1
         df.to_csv(sys.argv[1], mode='a')
