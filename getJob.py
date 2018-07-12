@@ -79,8 +79,11 @@ for index, search_word in enumerate(search_word_list):
             df_current = create_dataframe(append_list, columns)
             df = df.append(df_current)
 
+        try:
+            if is_id_error(max_id, tweets['statuses'][-1]['id']): break
+        except :
+            pass
         max_id = tweets['statuses'][-1]['id']
-        if is_id_error(max_id, tweets['statuses'][-1]['id']): break
         count += 1
         df.to_csv(sys.argv[1], mode='a')
         print(search_word, 'の探索回数は', count, '回目です')
