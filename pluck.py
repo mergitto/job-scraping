@@ -3,10 +3,9 @@ import sys
 from time import sleep
 import mojimoji
 
-df = pd.read_csv(sys.argv[1])
+df = pd.read_csv(sys.argv[1], header=None)
 
-df = df[df['id'] != 'id']
-df = df['tweet']
+df = df[0]
 df = df.dropna()
 
 df = df.str.replace("\<.+?\>", "")
