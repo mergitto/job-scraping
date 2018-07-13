@@ -34,18 +34,12 @@ def tweet_search(search_word, oauth, max_id):
     return tweets
 
 def prepare_tweet_list(tweet):
-    tweet_id = tweet['id']
     text = tweet['text']
-    created_at = tweet['created_at']
-    append_list = [tweet_id, text, created_at]
-    return append_list
+    return text
 
 
-def create_dataframe(data_list, columns):
-    df = pd.DataFrame(
-        [data_list],
-        columns=columns
-    )
+def create_dataframe(data_list):
+    df = pd.DataFrame([data_list])
     return df
 
 def is_same_max_id(max_id, current_max_id):
@@ -62,8 +56,7 @@ def is_id_error(max_id, current_max_id):
         return True
 
 
-columns = ['id', 'tweet', 'created_at']
-df = pd.DataFrame(columns=columns)
+df = pd.DataFrame()
 search_word_list = config.SEARCH_WORD_LIST
 for index, search_word in enumerate(search_word_list):
     max_id = -1
@@ -76,15 +69,19 @@ for index, search_word in enumerate(search_word_list):
             if re.match('RT', tweet['text']):
                 continue
             append_list = prepare_tweet_list(tweet)
-            df_current = create_dataframe(append_list, columns)
+            df_current = create_dataframe(append_list)
             df = df.append(df_current)
 
-        if is_id_error(max_id, tweets['statuses'][-1]['id']): break
+        try:
+            current_max_id = tweets['statuses'][-1]['id']
+        except :
+            break
+        if is_id_error(max_id, current_max_id): break
         max_id = tweets['statuses'][-1]['id']
         count += 1
-        df.to_csv(sys.argv[1], mode='a')
+        df.to_csv(sys.argv[1], mode='a', index=None, header=None)
         print(search_word, 'の探索回数は', count, '回目です')
         if is_end_loop(count): break
-        sleep(60)
+        sleep(10)
 
 
