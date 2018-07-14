@@ -4,7 +4,6 @@ import json, config
 from requests_oauthlib import OAuth1Session
 from time import sleep
 import pandas as pd
-from pprint import pprint
 import re
 import sys
 
@@ -28,7 +27,6 @@ def tweet_search(search_word, oauth, max_id):
         }
     responce = oauth.get(url, params = params)
     if responce.status_code != 200:
-        print("Error code: %d" %(responce.status_code))
         return None
     tweets = json.loads(responce.text)
     return tweets
@@ -52,7 +50,6 @@ def is_id_error(max_id, current_max_id):
     try:
         return is_same_max_id(max_id, current_max_id)
     except IndexError:
-        print('リストの添字に関するエラー')
         return True
 
 
