@@ -62,12 +62,15 @@ for index, search_word in enumerate(search_word_list):
         oauth = get_oauth()
         tweets = tweet_search(search_word, oauth, max_id)
 
-        for tweet in tweets['statuses']:
-            if re.match('RT', tweet['text']):
-                continue
-            append_list = prepare_tweet_list(tweet)
-            df_current = create_dataframe(append_list)
-            df = df.append(df_current)
+        try:
+            for tweet in tweets['statuses']:
+                if re.match('RT', tweet['text']):
+                    continue
+                append_list = prepare_tweet_list(tweet)
+                df_current = create_dataframe(append_list)
+                df = df.append(df_current)
+        except:
+            break
 
         try:
             current_max_id = tweets['statuses'][-1]['id']
