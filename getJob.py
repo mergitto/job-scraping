@@ -55,6 +55,7 @@ for index, search_word in enumerate(search_word_list):
     max_id = -1
     count = 0
     while True:
+        df = pd.DataFrame()
         oauth = get_oauth()
         tweets = tweet_search(search_word, oauth, max_id)
 
@@ -64,6 +65,7 @@ for index, search_word in enumerate(search_word_list):
                     continue
                 append_list = prepare_tweet_list(tweet)
                 df_current = create_dataframe(append_list)
+                df = df.append(df_current)
         except:
             break
 
@@ -74,7 +76,7 @@ for index, search_word in enumerate(search_word_list):
         if is_id_error(max_id, current_max_id): break
         max_id = tweets['statuses'][-1]['id']
         count += 1
-        df_current.to_csv(sys.argv[1], mode='a', index=None, header=None)
+        df.to_csv(sys.argv[1], mode='a', index=None, header=None)
         print(search_word, 'の探索回数は', count, '回目です')
         sleep(10)
 
